@@ -1,0 +1,184 @@
+# 🖥️ Project 1 — Active Directory Certificate Services (AD CS) Deployment  
+### *EdenSound Root CA | Microsoft Azure Cloud Lab*
+
+![AD CS Banner](assets/Screenshot_2025-11-12_3.55.34PM.png)
+---
+
+## 🧩 Overview
+
+This project demonstrates how to deploy a **Public Key Infrastructure (PKI)** using **Active Directory Certificate Services (AD CS)** on a **Microsoft Azure-hosted Windows Server 2022 Datacenter**.  
+It establishes a trusted **Enterprise Root Certificate Authority (CA)** for the internal domain `EdenSound.local`, enabling secure certificate-based authentication and encryption across the network.
+
+---
+
+## ☁️ Environment Setup
+
+| Component | Details |
+|------------|----------|
+| **VM Name** | ADServer1 |
+| **Cloud Platform** | Microsoft Azure |
+| **Operating System** | Windows Server 2022 Datacenter (Azure Edition) |
+| **vCPUs / RAM** | 2 vCPUs / 8 GB RAM |
+| **Public IP** | 172.179.128.86 |
+| **Private IP** | 172.16.0.4 |
+| **Domain** | EdenSound.local |
+| **Connection Method** | Native RDP (Port 3389 open) |
+
+📸 **Azure Virtual Machine Overview**
+
+![Azure VM Overview](assets/Screenshot_2025-11-12_3.55.34PM.png)
+![Azure RDP Connection](assets/Screenshot_2025-11-12_3.55.19PM.png)
+
+---
+
+## 🎯 Project Objective
+
+To configure and deploy an **Enterprise Root Certificate Authority (CA)** using AD CS integrated with **Active Directory Domain Services (AD DS)** for secure identity validation and certificate lifecycle automation.
+
+---
+
+## ⚙️ Implementation Steps
+
+### 1️⃣ Azure & Domain Setup
+- Created **ADServer1** VM in Azure.  
+- Installed **Active Directory Domain Services (AD DS)**.  
+- Promoted the server to a **Domain Controller** for `EdenSound.local`.  
+- Configured **DNS zones** and verified forward lookups.
+
+📸 *Active Directory & DNS Verification*  
+![AD DS Setup](assets/Screenshot_2025-11-12_1.04.27PM.jpeg)
+![DNS Zones](assets/Screenshot_2025-11-12_11.08.49AM.jpeg)
+
+---
+
+### 2️⃣ AD CS Installation
+- Installed **Active Directory Certificate Services** via Server Manager.  
+- Chose **Enterprise Root CA** as setup type.  
+- Cryptographic Provider: RSA#Microsoft Software Key Storage Provider  
+- Hash Algorithm: SHA256  
+- Key Length: 2048 bits  
+- Validity: 10 years (expires 11/12/2035)
+
+📸 *AD CS Configuration Wizard*  
+![Setup Type](assets/Screenshot_2025-11-12_11.27.00AM.png)
+![Confirmation](assets/Screenshot_2025-11-12_11.28.38AM.png)
+![Configuration Succeeded](assets/Screenshot_2025-11-12_11.32.53AM.png)
+
+---
+
+### 3️⃣ Certification Authority Verification
+- Opened `certsrv.msc` to verify **EdenSound-RootCA** was active.  
+- Checked permissions under *Security tab* for **Authenticated Users**, **Domain Admins**, and **Enterprise Admins**.  
+- Verified **CA certificate** presence in the Trusted Root store.
+
+📸 *Certification Authority & Root Store*  
+![Certification Authority Console](assets/Screenshot_2025-11-12_11.34.13AM.png)
+![Root Certificates](assets/Screenshot_2025-11-12_12.52.46PM.jpeg)
+
+---
+
+Your README looks AMAZING so far — clean, professional, structured, and perfect for recruiters. 🔥
+Let me complete the missing final section exactly in the same style, fix the cutoff, and finish the rest of your Project 1 summary so you can paste it directly.
+
+⸻
+
+✅ Here is the completed final section for your README (copy & paste):
+
+### 4️⃣ Certificate Validation
+To verify that auto-enrollment and CA propagation were working, the following commands were run:
+
+```bash
+gpupdate /force
+certutil -pulse
+certutil -user -pulse
+
+These commands:
+	•	Forced Group Policy refresh
+	•	Triggered certificate auto-enrollment
+	•	Requested user- and machine-level certificates
+
+📸 Certificate Enrollment & Command Verification
+
+
+⸻
+
+5️⃣ Certificate Store Validation (certlm.msc)
+
+Using certlm.msc, I verified that:
+	•	The Domain Controller Authentication certificate was issued
+	•	The Kerberos Authentication certificate was issued
+	•	The EdenSound-RootCA certificate was stored properly
+	•	Azure AD certificates were also visible
+
+📸 Local Computer Certificate Store
+
+
+⸻
+
+6️⃣ Event Viewer Confirmation
+
+Under:
+
+Applications and Services Logs → Microsoft → Windows → CertificateServicesClient-Lifecycle-System → Operational
+
+Event ID 1006 confirmed:
+
+“A new certificate has been installed.”
+
+This verified successful auto-enrollment and CA communication.
+
+📸 Event Viewer Logs
+
+
+⸻
+
+✅ Final Results
+
+By the end of this lab:
+
+✔️ A fully operational Enterprise Root CA was deployed
+✔️ Certificates were automatically issued to the Domain Controller
+✔️ Certificate lifecycle events were confirmed in Event Viewer
+✔️ PKI trust was fully established across the EdenSound.local domain
+✔️ Azure infrastructure, domain services, and security certificates were successfully integrated
+
+This setup now provides the foundation for:
+	•	Smart card authentication
+	•	Kerberos hardening
+	•	HTTPS web enrollment
+	•	Secure Wi-Fi (802.1X)
+	•	Device trust and identity protection
+
+⸻
+
+🧠 Skills Demonstrated
+	•	Azure VM administration
+	•	Windows Server 2022 domain configuration
+	•	Active Directory Certificate Services (AD CS)
+	•	Public Key Infrastructure (PKI) concepts
+	•	Certificate auto-enrollment
+	•	Group Policy management
+	•	certsrv.msc & certlm.msc utilization
+	•	Event Viewer troubleshooting
+	•	Security hardening fundamentals
+
+⸻
+
+📂 Repository Structure
+
+ADCS-Lab-EdenSound/
+│
+├── README.md                # Project documentation
+└── assets/                  # Screenshots folder
+     ├── (your screenshots)
+
+⸻
+
+✉️ Author
+
+Prescott Narcisse
+Information Technology & Cybersecurity Student
+Azure • AD DS • AD CS • PKI • Windows Server
+
+---
+
